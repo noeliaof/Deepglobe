@@ -1,0 +1,9 @@
+torch 
+torchvision
+albumentations
+segmentation-models-pytorch
+pandas
+seaborn
+numpy 
+matplotlib
+Flask==2.1.1
