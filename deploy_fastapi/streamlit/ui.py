@@ -98,17 +98,7 @@ if st.button('Get segmentation map'):
     else:
         segments = process(image, url+endpoint)
         segmented_image = Image.open(io.BytesIO(segments.content)).convert('RGB')
-       # st.image([image_file, segmented_image], width=300)  # output dyptich
-
-        #col1, col2 = st.columns([6,6], gap="small")
-        #with col1:
-        #    st.markdown('### **Uploaded Satellite Image**',unsafe_allow_html=True)
-        #    st.image(image_file,width=300)  #300 #640
-        #with col2:
-        #    st.markdown('### **Predicted Image**',unsafe_allow_html=True)
-        #    st.image(segmented_image, width=300) 
-
-
+       
         # Image comparison
         image_comparison(
         img1=image,#image_to_rgb(satellite_input_imageobj),#satellite_input_imageobj,
