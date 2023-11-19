@@ -162,3 +162,12 @@ cython_debug/
 data/
 models/
 .DS_Store
+# Format
+*.png
+*.tiff
+**/.pth
+*.tar
+
+.vscode
+
+**/*.pem

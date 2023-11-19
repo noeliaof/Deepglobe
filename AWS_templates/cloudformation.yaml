@@ -1,0 +1,68 @@
+  AWSTemplateFormatVersion: "2010-09-09"
+  Description: Simple cloud formation for bucket creation and configuration
+
+
+  Parameters:
+    BucketName: { Type: String, Default: "deepglobedata" }
+
+  Resources:
+    S3Bucket:
+      DeletionPolicy: Retain
+      Type: 'AWS::S3::Bucket'
+      Description: Creating Amazon S3 bucket from CloudFormation
+      Properties:
+        BucketName: !Ref BucketName
+        AccessControl: Private
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        VersioningConfiguration:
+          Status: Enabled
+    
+    NewKeyPair:
+      Type: 'AWS::EC2::KeyPair'
+      Properties: 
+        KeyName: key-pair-segment
+
+
+  # EC2 instance
+    WebAppInstance:
+      Type: AWS::EC2::Instance
+      Properties:
+        ImageId: ami-0d5eff06f840b45e9 # ImageID valid only in us-east-1 region
+        InstanceType: t2.micro
+        KeyName: key-pair-segment # <-- Change to use your key-pair name
+        SecurityGroupIds:
+          - !Ref WebAppSecurityGroup
+
+    WebAppSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupName: !Join ["-", [webapp-security-group, dev]]
+        GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 80
+            ToPort: 80
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 0.0.0.0/0
+
+
+  Outputs:
+    S3Bucket:
+      Description: Bucket Created using this template.
+      Value: !Ref S3Bucket
+

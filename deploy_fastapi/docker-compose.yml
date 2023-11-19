@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  fastapi:
+    build: fastapi/
+    ports: 
+      - 8000:8000
+  
+    environment:
+      - TIMEOUT="300"
+      - KEEP_ALIVE="300"
+    container_name: fastapi
+    deploy:
+      resources:
+        limits:
+          memory: 14GB
+        reservations:
+          memory: 14GB
+
+  streamlit:
+    build: streamlit/
+    depends_on:
+      - fastapi
+    ports: 
+        - 8501:8501
+   
+    container_name: streamlit
+    environment:
+      - FASTAPI_DOMAIN=fastapi
+ 

@@ -1,0 +1,28 @@
+# config.yaml
+MODEL_CLASSES:
+  DeepLabV3Plus: DeepLabV3Plus
+  Unet: Unet
+  UnetPlusPlus: UnetPlusPlus
+# Add other models as needed
+MODEL: DeepLabV3Plus
+
+ENCODER: resnet50
+ENCODER_WEIGHTS: imagenet
+ACTIVATION: softmax2d  # Change to softmax if needed
+EPOCHS: 1
+lr: 0.0008
+
+n_workers: 0
+BATCH: 2
+CLASSES:
+  - urban_land
+  - agriculture_land
+  - rangeland
+  - forest_land
+  - water
+  - barren_land
+  - unknown
+
+DATA_DIR: '/Users/noeliaotero/Documents/WeCloudData/Capstone_project/Deepglobe/data/'
+OUT_DIR: '/Users/noeliaotero/Documents/WeCloudData/Capstone_project/Deepglobe/models/'
+

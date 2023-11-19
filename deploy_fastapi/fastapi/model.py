@@ -2,7 +2,7 @@ import os
 import torch
 import albumentations as album
 import segmentation_models_pytorch as smp
-from utils.utils import *
+from utils import *
 import segmentation_models_pytorch as smp
 
 
@@ -22,10 +22,17 @@ def build_model(config):
 
     return model
 
+def load_model(config, model_path):
 
-def load_model(config):
-    model = build_model()
-    model_path = os.path.join(config['OUT_DIR'], "final_model.pth")
-    model.load_state_dict(torch.load(model_path))
+    model = build_model(config)
+    try:
+        state_dict = torch.load(model_path, map_location=torch.device('cpu'))
+        print("load state")
+        model.load_state_dict(state_dict)
+    except Exception as e:
+        print(f"An error occurred during model loading: {e}")
+        # Add additional information or logging here
+        raise e
+    print("movel eval")
     model.eval()
     return model

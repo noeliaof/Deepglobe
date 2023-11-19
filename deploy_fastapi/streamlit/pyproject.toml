@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "streamlit_segment"
+version = "0.1.0"
+description = ""
+authors = ["noeliaof <noeli1680@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+streamlit = "^1.28.1"
+pillow = "^10.1.0"
+numpy = "^1.26.2"
+requests-toolbelt = "^1.0.0"
+opencv-python = "^4.8.1.78"
+streamlit-image-comparison = "^0.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

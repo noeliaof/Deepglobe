@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "fastapi_env"
+version = "0.1.0"
+description = ""
+authors = ["noeliaof <noeli1680@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+torch = "^2.1.1"
+matplotlib = "^3.8.2"
+numpy = "^1.26.2"
+pillow = "^10.1.0"
+torchvision = "^0.16.1"
+pandas = "^2.1.3"
+opencv-python = "^4.8.1.78"
+starlette-dataframe-response = "^0.0.0"
+fastapi = "^0.104.1"
+pyyaml = "^6.0.1"
+streamlit = "^1.28.2"
+uvicorn = "^0.24.0.post1"
+scipy = "^1.11.3"
+scikit-learn = "^1.3.2"
+albumentations = "^1.3.1"
+segmentation-models-pytorch = "^0.3.3"
+python-multipart = "^0.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
