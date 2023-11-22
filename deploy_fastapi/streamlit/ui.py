@@ -5,6 +5,12 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import requests
 import numpy as np
 from PIL import Image
+import logging
+from datetime import datetime
+
+# Set up logging configuration
+logging.basicConfig(level=logging.INFO)
+
 import io
 
 from datetime import datetime
@@ -65,8 +71,7 @@ if image_file is not None:
     st.image(image, caption='Enter any caption here',  width=300)
 
 def process(image, server_url: str):
-    print(f"Processing image with server_url: {server_url}")
-
+    
     img_byte_arr = io.BytesIO()
     image.save(img_byte_arr, format='PNG')
     img_byte_arr = img_byte_arr.getvalue()
@@ -78,11 +83,12 @@ def process(image, server_url: str):
     print("Data being sent in the request:")
     #print(m.fields)
     try:
-        print("request---")
+        logging.info("Request started")
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         print("Current Time =", current_time)
         r = requests.post(server_url, data=m, headers={'Content-Type': m.content_type}, timeout=1000)
+        logging.info("Request completed")
         return r
     except Exception as e:
         print("An error occurred during the POST request:")

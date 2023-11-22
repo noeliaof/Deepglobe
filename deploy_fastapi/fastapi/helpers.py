@@ -50,8 +50,6 @@ def vis_patch(image_vis):
     return img_path  # Return the path to the saved image
 
 
-
-
 def visualize_mask(pred_mask, config, gt_mask=None):
     select_class_rgb_values, class_rgb_values = get_classes(config['DATA_DIR'], config['CLASSES'])
 

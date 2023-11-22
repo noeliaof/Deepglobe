@@ -22,15 +22,15 @@ app = FastAPI(
 
 
 @app.get("/")
-async def read_root():
+def read_root():
     return {"message": "Welcome to the root of the API"}
 
 # Your other routes and functions go here
 
 @app.post("/segment")
-async def segment(file: UploadFile):
+def segment(file: UploadFile):
 
-    content = await file.read()
+    content = file.file.read()
     image = Image.open(io.BytesIO(content))
     # Perform segmentation using the model
     pred_mask = infer_image(image)
