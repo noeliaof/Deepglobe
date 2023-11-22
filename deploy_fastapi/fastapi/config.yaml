@@ -23,6 +23,5 @@ CLASSES:
   - barren_land
   - unknown
 
-DATA_DIR: '/Users/noeliaotero/Documents/WeCloudData/Capstone_project/Deepglobe/data/'
-OUT_DIR: '/Users/noeliaotero/Documents/WeCloudData/Capstone_project/Deepglobe/models/'
+DATA_DIR: 'data/'
 

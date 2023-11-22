@@ -19,6 +19,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # Copy only necessary files
 COPY models/final_model.pth /fastapi/models/final_model.pth
+COPY data/*.csv /fastapi/data/
 COPY . /fastapi/
 
 # Expose the port

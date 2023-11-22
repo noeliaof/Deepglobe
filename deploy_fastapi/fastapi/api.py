@@ -12,7 +12,7 @@ from starlette.responses import Response
 
 from fastapi import FastAPI, File, UploadFile
 
-from utils import get_classes,colour_code_segmentation, reverse_one_hot
+from utils import get_classes, colour_code_segmentation, reverse_one_hot
 from helpers import infer_image, load_config
 from helpers import config
 
