@@ -4,6 +4,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 import tempfile
 from PIL import Image
+import torch
 from torchvision import transforms
 from utils import *
 from model import load_config, load_model
@@ -20,8 +21,11 @@ def infer_image(image):
     print("shape", img.shape)
     # Add batch dimension
     img = img.unsqueeze(0)
-    pred_mask = model(img).detach().cpu().numpy()
-    pred_mask = pred_mask.squeeze()
+    with torch.no_grad():
+        pred_mask = model(img)
+        pred_mask = pred_mask.detach().cpu().numpy()
+        #pred_mask = model(img).detach().cpu().numpy()
+        pred_mask = pred_mask.squeeze()
    
     #true_pred = np.argmax(pred_mask,axis=0)
     print("before return infer_image")
