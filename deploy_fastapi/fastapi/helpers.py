@@ -24,7 +24,6 @@ def infer_image(image):
     with torch.no_grad():
         pred_mask = model(img)
         pred_mask = pred_mask.detach().cpu().numpy()
-        #pred_mask = model(img).detach().cpu().numpy()
         pred_mask = pred_mask.squeeze()
    
     #true_pred = np.argmax(pred_mask,axis=0)
