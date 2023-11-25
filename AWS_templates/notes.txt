@@ -7,3 +7,9 @@ aws ssm get-parameter --name /ec2/keypair/key-07149276c5d49978c --with-decryptio
  #TO CONNECT:
 
 ssh -i new-key-pair.pem ec2-user@ec2-35-153-102-85.compute-1.amazonaws.com
+
+# CLOUD FORMATION
+# ECR logi
+ aws ecr get-login-password --region us-east-1 | docker login --username AWS  --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
+# Update stack
+aws cloudformation update-stack --stack-name deepglobedata --template-body file://cloudformation.yaml
