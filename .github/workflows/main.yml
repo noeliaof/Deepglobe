@@ -19,22 +19,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
 
-    - name: Login to Amazon ECR
-      run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
+    # - name: Login to Amazon ECR
+    #   run: |
+    #     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
 
-    - name: Build and push Docker image
-      run: |
-        # CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
-        cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest .
-        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
-        cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest .
-        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
+    # - name: Build and push Docker image
+    #   run: |
+    #     # CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
+    #     cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest .
+    #     docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
+    #     cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest .
+    #     docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
 
-  deploy-to-ecs:
+  deploy-to-ec2:
     runs-on: ubuntu-latest
 
     needs: build-and-push
@@ -43,11 +43,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Login to Amazon ECR
+    - name: Get EC2 credentials
       run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
+        aws ec2 describe-key-pairs --filters Name=key-name,Values=key-pair-segment --query KeyPairs\[\*\].KeyPairId --output text
+        aws ssm get-parameter --name /ec2/keypair/key-07149276c5d49978c --with-decryption --query Parameter.Value --output text > new-key-pair.pem
 
-    - name: Deploy to ECS
+    - name: Copy docker-compose to EC2
       run: |
-        aws ecs update-service --cluster your-ecs-cluster-na
+        scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' deploy_fastapi/docker-compose.yml ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com:/home/ubuntu
 
