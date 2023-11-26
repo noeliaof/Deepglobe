@@ -68,9 +68,9 @@ jobs:
         ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com 'mkdir -p /home/ubuntu/.aws'
         ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com << 'EOC'
         cat << EOF > /home/ubuntu/.aws/credentials
-        echo [default]
-        aws_access_key_id = "$aws-access-key-id"
-        aws_secret_access_key = "$aws-secret-access-key"
+        [default]
+        aws_access_key_id = ${aws-access-key-id}
+        aws_secret_access_key = ${aws-secret-access-key}
         EOC
         ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com << 'EOC'
         cat << EOF > /home/ubuntu/.aws/config
