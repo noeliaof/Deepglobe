@@ -6,24 +6,18 @@ networks:
 
 services:
   fastapi:
-    build: fastapi/
+    image: 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
     ports:
       - "8000:8000"
     environment:
       - TIMEOUT="300"
       - KEEP_ALIVE="300"
     container_name: fastapi
-    deploy:
-      resources:
-        limits:
-          memory: 14GB  
-        reservations:
-          memory: 14GB  
     networks:
       - mynetwork
 
   streamlit:
-    build: streamlit/
+    image: 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
     depends_on:
       - fastapi
     ports:

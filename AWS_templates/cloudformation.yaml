@@ -35,11 +35,33 @@ Resources:
   WebAppInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0d5eff06f840b45e9 # ImageID valid only in us-east-1 region
+      ImageId: ami-0fc5d935ebf8bc3bc # ImageID valid only in us-east-1 region
       InstanceType: t2.micro
       KeyName: key-pair-segment # <-- Change to use your key-pair name
+      Tags:
+        - Key: Name
+          Value: "Deepglobe"
       SecurityGroupIds:
         - !Ref WebAppSecurityGroup
+      UserData:
+        Fn::Base64: 
+          |
+          #!/bin/bash -xe
+
+          # Install Docker
+          sudo apt-get update -y && sudo apt-get upgrade -y
+          sudo apt-get install ca-certificates curl gnupg -y
+          sudo install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+          sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+          # Add the repository to Apt sources:
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          sudo apt-get update -y
+          sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
   WebAppSecurityGroup:
     Type: AWS::EC2::SecurityGroup

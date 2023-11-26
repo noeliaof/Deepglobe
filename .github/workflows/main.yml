@@ -28,11 +28,11 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
-        cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:$CURRENT_DATETIME .
-        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:$CURRENT_DATETIME
-        cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:$CURRENT_DATETIME .
-        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:$CURRENT_DATETIME
+        # CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
+        cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest .
+        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
+        cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest .
+        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
 
   deploy-to-ecs:
     runs-on: ubuntu-latest
