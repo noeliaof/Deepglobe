@@ -56,24 +56,27 @@ jobs:
         aws ssm get-parameter --name /ec2/keypair/key-07149276c5d49978c --with-decryption --query Parameter.Value --output text > new-key-pair.pem
         chmod 0400 new-key-pair.pem
 
-    - name: Config and deploy to EC2
+    - name: Get EC2 public DNS
       run: |
         echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text)" >> $GITHUB_ENV
-        scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' deploy_fastapi/docker-compose.yml ubuntu@$PUBLIC_DNS:/home/ubuntu
-        ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS 'mkdir -p /home/ubuntu/.aws'
-        ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS << 'EOC'
+
+    - name: Config and deploy to EC2
+      run: |
+        scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' deploy_fastapi/docker-compose.yml ubuntu@${{ env.PUBLIC_DNS }}:/home/ubuntu
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} 'mkdir -p /home/ubuntu/.aws'
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} << 'EOC'
         cat << EOF > /home/ubuntu/.aws/credentials
         [default]
         aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         EOC
-        ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS << 'EOC'
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} << 'EOC'
         cat << EOF > /home/ubuntu/.aws/config
         [default]
         region = us-east-1
         EOC
 
         # startup
-        ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS \
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} \
           'aws ecr get-login-password | sudo docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com && sudo docker compose up'
 
