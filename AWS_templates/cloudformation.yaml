@@ -100,6 +100,8 @@ Resources:
                   AWS:
                     - "arn:aws:iam::769744325574:root"
                     - "arn:aws:iam::769744325574:user/noelia.otero"
+                  Service:
+                    - "ec2.amazonaws.com"
                 Action:
                   - "ecr:BatchCheckLayerAvailability"
                   - "ecr:CompleteLayerUpload"
@@ -107,10 +109,7 @@ Resources:
                   - "ecr:PutImage"
                   - "ecr:UploadLayerPart"
 
-
-
 Outputs:
   S3Bucket:
     Description: Bucket Created using this template.
     Value: !Ref S3Bucket
-     
