@@ -13,6 +13,8 @@ services:
       - TIMEOUT="300"
       - KEEP_ALIVE="300"
     container_name: fastapi
+    volumes:
+      - ./final_model.pth:/fastapi/models/final_model.pth
     networks:
       - mynetwork
 

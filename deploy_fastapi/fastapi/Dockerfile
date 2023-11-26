@@ -18,7 +18,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy only necessary files
-COPY models/final_model.pth /fastapi/models/final_model.pth
+# COPY models/final_model.pth /fastapi/models/final_model.pth
 COPY data/*.csv /fastapi/data/
 COPY . /fastapi/
 
