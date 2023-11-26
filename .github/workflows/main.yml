@@ -59,4 +59,10 @@ jobs:
     - name: Copy docker-compose to EC2
       run: |
         scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' deploy_fastapi/docker-compose.yml ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com:/home/ubuntu
+    
+    - name: Docker-compose up
+      run: |
+        docker-compose up 
+
+
 
