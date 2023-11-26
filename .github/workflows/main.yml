@@ -63,8 +63,8 @@ jobs:
         echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text | tr -d '[:space:]')" >> $GITHUB_ENV
 
     - name: Copy Model from S3 to EC2
-        run: |
-          ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} 'aws s3 cp s3://deepglobedata/final_model.pth /home/ubuntu'
+      run: |
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} 'aws s3 cp s3://deepglobedata/final_model.pth /home/ubuntu'
 
     - name: Config and deploy to EC2
       run: |
