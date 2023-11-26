@@ -58,7 +58,7 @@ jobs:
 
     - name: Get EC2 public DNS
       run: |
-        echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text)" >> $GITHUB_ENV
+        echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text | tr -d '[:space:]')" >> $GITHUB_ENV
 
     - name: Config and deploy to EC2
       run: |
