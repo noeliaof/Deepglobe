@@ -65,7 +65,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        mkdir -p /home/ubuntu/.aws
+        sudo mkdir -p /home/ubuntu/.aws
         cat <<EOF >/home/ubuntu/.aws/credentials
         [default]
         aws_access_key_id = "$aws-access-key-id"
