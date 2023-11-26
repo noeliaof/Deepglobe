@@ -58,7 +58,7 @@ jobs:
 
     - name: Config and deploy to EC2
       run: |
-        PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text)
+        echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text)" >> $GITHUB_ENV
         scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' deploy_fastapi/docker-compose.yml ubuntu@$PUBLIC_DNS:/home/ubuntu
         ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS 'mkdir -p /home/ubuntu/.aws'
         ssh -i new-key-pair.pem ubuntu@$PUBLIC_DNS << 'EOC'
