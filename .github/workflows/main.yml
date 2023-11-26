@@ -65,16 +65,18 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        sudo mkdir -p /home/ubuntu/.aws
-        cat <<EOF >/home/ubuntu/.aws/credentials
-        [default]
+        ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com 'mkdir -p /home/ubuntu/.aws'
+        ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com << 'EOC'
+        cat << EOF > /home/ubuntu/.aws/credentials
+        echo [default]
         aws_access_key_id = "$aws-access-key-id"
         aws_secret_access_key = "$aws-secret-access-key"
-        EOF
-        cat <<EOF >/home/ubuntu/.aws/config
+        EOC
+        ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com << 'EOC'
+        cat << EOF > /home/ubuntu/.aws/config
         [default]
         region = us-east-1
-        EOF
+        EOC
 
     - name: Docker-compose up
       run: |
