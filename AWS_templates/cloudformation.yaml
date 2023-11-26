@@ -36,8 +36,14 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0fc5d935ebf8bc3bc # ImageID valid only in us-east-1 region
-      InstanceType: t2.micro
+      InstanceType: t2.medium
       KeyName: key-pair-segment # <-- Change to use your key-pair name
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: '60'
+            DeleteOnTermination: 'false'
+            Encrypted: 'true'
       Tags:
         - Key: Name
           Value: "Deepglobe"
