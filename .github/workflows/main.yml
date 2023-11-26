@@ -81,6 +81,6 @@ jobs:
     - name: Docker-compose up
       run: |
         ssh -i new-key-pair.pem ubuntu@ec2-3-93-191-108.compute-1.amazonaws.com \
-          'aws ecr get-login-password | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com && sudo docker compose up'
+          'aws ecr get-login-password | sudo docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com && sudo docker compose up'
 
 
