@@ -26,7 +26,7 @@ jobs:
   
     - name: Update infrastracture-CloudFormation
       run: | 
-        aws cloudformation update-stack --stack-name deepglobedata --template-body file://../AWS_templates/cloudformation.yaml --capabilities CAPABILITY_AUTO_EXPAND
+        aws cloudformation update-stack --stack-name deepglobedata --template-body file://${PWD}/AWS_templates/cloudformation.yaml --capabilities CAPABILITY_AUTO_EXPAND
 
     - name: Login to Amazon ECR
       run: |
