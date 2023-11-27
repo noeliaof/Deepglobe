@@ -19,22 +19,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    # - name: Checkout code
-    #   uses: actions/checkout@v2
-    #   with:
-    #     lfs: true
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        lfs: true
 
-    # - name: Login to Amazon ECR
-    #   run: |
-    #     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
+    - name: Login to Amazon ECR
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 769744325574.dkr.ecr.us-east-1.amazonaws.com
 
-    # - name: Build and push Docker image
-    #   run: |
-    #     # CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
-    #     cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest .
-    #     docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
-    #     cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest .
-    #     docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
+    - name: Build and push Docker image
+      run: |
+        # CURRENT_DATETIME=$(date +"%Y%m%d%H%M")
+        cd deploy_fastapi/streamlit && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest .
+        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/streamlit:latest
+        cd ../fastapi && docker build -t 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest .
+        docker push 769744325574.dkr.ecr.us-east-1.amazonaws.com/fastapi:latest
 
   deploy-to-ec2:
     runs-on: ubuntu-latest
