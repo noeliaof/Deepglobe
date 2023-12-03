@@ -36,9 +36,7 @@ def preprocess_image(image_path):
     # Add any necessary preprocessing steps for your input image
     # For example, resizing, normalization, etc.
     img = Image.open(image_path)
-    # Perform any necessary transformations on 'img'
-    # ...
-
+    
     # Convert the image to a PyTorch tensor
     img = transforms.ToTensor()(img)
 
@@ -59,10 +57,6 @@ def inference_single_image(model, image_path):
     # Perform inference
     with torch.no_grad():
         output = model(input_image)
-
-    # Process the output as needed
-    # (e.g., applying softmax for classification)
-    # processed_output = ...
 
     return output.cpu().numpy()
 
