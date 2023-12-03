@@ -162,7 +162,7 @@ cython_debug/
 data_images/
 models/
 models_main/
-*deploy_fastapi/final_model.pth
+deploy_fastapi/final_model.pth
 .DS_Store
 # Format
 *.png
