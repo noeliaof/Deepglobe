@@ -165,7 +165,7 @@ models_main/
 deploy_fastapi/final_model.pth
 .DS_Store
 # Format
-*.png
+.png
 *.tiff
 **/.pth
 *.tar
