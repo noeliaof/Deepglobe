@@ -22,7 +22,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        lfs: true
+        lfs: false
   
     - name: Update infrastracture-CloudFormation
       run: | 
