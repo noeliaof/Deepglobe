@@ -67,7 +67,7 @@ jobs:
         echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text | tr -d '[:space:]')" >> $GITHUB_ENV
 
     - name: Check if EC2 is running
-     # Check the status of the instance
+      # Check the status of the instance
       run: |
 
         instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=Deepglobe" --query 'Reservations[*].Instances[*].InstanceId' --output text)
