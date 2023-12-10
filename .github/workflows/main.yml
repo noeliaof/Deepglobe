@@ -92,8 +92,8 @@ jobs:
 
     - name: Copy nginx configuration file for the custom domain 
       run: |
-        scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' AWS_templates/segmensat.conf ubuntu@${{ env.PUBLIC_DNS }}:/etc/nginx/sites-enabled/
-        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} 'sudo nginx -t && sudo service nginx restart'
+        scp -i new-key-pair.pem -o 'StrictHostKeyChecking no' AWS_templates/segmensat.conf ubuntu@${{ env.PUBLIC_DNS }}:/home/ubuntu
+        ssh -i new-key-pair.pem ubuntu@${{ env.PUBLIC_DNS }} 'sudo mv /home/ubuntu/segmensat.conf /etc/nginx/sites-enabled/ && sudo nginx -t && sudo service nginx restart'
    
     - name: Config and deploy to EC2
       run: |
