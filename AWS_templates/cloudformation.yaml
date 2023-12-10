@@ -80,8 +80,8 @@ Resources:
       GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
+          FromPort: 80
+          ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
