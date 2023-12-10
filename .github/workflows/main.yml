@@ -85,7 +85,8 @@ jobs:
             
             echo "Instance launched successfully."
         fi
-     - name: Copy Model from S3 to EC2
+    
+    - name: Copy Model from S3 to EC2
       run: |
         ssh -i new-key-pair.pem -o 'StrictHostKeyChecking no' ubuntu@${{ env.PUBLIC_DNS }} 'aws s3 cp s3://deepglobedata/final_model.pth /home/ubuntu'
 
