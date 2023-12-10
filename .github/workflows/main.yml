@@ -66,6 +66,25 @@ jobs:
       run: |
         echo "PUBLIC_DNS=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=Deepglobe' --query 'Reservations[].Instances[].PublicDnsName[]' --output text | tr -d '[:space:]')" >> $GITHUB_ENV
 
+    - name: Check if EC2 is running
+     # Check the status of the instance
+      run: |
+
+        instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=Deepglobe" --query 'Reservations[*].Instances[*].InstanceId' --output text)
+
+        status=$(aws ec2 describe-instance-status --instance-ids $instance_id --query 'InstanceStatuses[0].InstanceState.Name' --output text)
+
+        if [ "$status" = "running" ]; then
+            echo "Instance is already running."
+        else
+            echo "Instance is not running. Launching..."
+          
+            aws ec2 start-instances --instance-ids $instance_id
+            # wait until the instance is running
+            aws ec2 wait instance-running --instance-ids $instance_id 
+            
+            echo "Instance launched successfully."
+        fi
     - name: Copy Model from S3 to EC2
       run: |
         ssh -i new-key-pair.pem -o 'StrictHostKeyChecking no' ubuntu@${{ env.PUBLIC_DNS }} 'aws s3 cp s3://deepglobedata/final_model.pth /home/ubuntu'

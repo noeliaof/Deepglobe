@@ -5,7 +5,6 @@ import yaml
 import torch
 import boto3
 import requests
-import tflite_runtime.interpreter as tflite
 import numpy as np
 from urllib.request import urlopen
 from PIL import Image
@@ -204,7 +203,7 @@ def lambda_handler(event, context):
         preds = infer_image(img)
         
         # Obtain the result
-        results = decode_predictions(preds)
+        results = decode_pred(preds)
 
         return results
     else:
