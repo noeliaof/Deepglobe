@@ -68,7 +68,7 @@ As illustrated in the scheme above the deployment steps are:
 
 ### Uploading Images
 
-Visit the Streamlit application URL and use the file uploader to upload images for segmentation. To obtain the images, visit the data availability in the paper.
+Use the file uploader to upload images for segmentation. To obtain the images, visit the data availability in the paper.
 
 ### Getting Segmentation Maps
 
