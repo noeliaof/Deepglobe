@@ -94,4 +94,4 @@ cd image-segmentation-deployment
 ```
 
 
-#### Caution note:** This is an ongoing project, and as such, it may not be working (yet) properly. It will be updated soon.
+#### Caution note:** This is an ongoing project, and as such, it may not be working (yet) properly. It will be updated soon. A further deployment with lamdba will be add.
